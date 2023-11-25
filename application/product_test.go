@@ -1,13 +1,14 @@
 package application_test
 
 import (
-	"github.com/italog/go-hexagonal"
+	"testing"
+
+	"github.com/italog/go-hexagonal/application"
 	uuid "github.com/satori/go.uuid"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
-func TestProduct_Enable(t *testing.T)  {
+func TestProduct_Enable(t *testing.T) {
 	product := application.Product{}
 	product.Name = "Hello"
 	product.Status = application.DISABLED
@@ -21,7 +22,7 @@ func TestProduct_Enable(t *testing.T)  {
 	require.Equal(t, "The price must be greater than zero to enable the product", err.Error())
 }
 
-func TestProduct_Disable(t *testing.T)  {
+func TestProduct_Disable(t *testing.T) {
 	product := application.Product{}
 	product.Name = "Hello"
 	product.Status = application.ENABLED
