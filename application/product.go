@@ -19,11 +19,12 @@ type ProductInterface interface {
 	GetName() string
 	GetStatus() string
 	GetPrice() float64
+	ChangePrice(price float64) error
 }
 
 const (
 	DISABLED = "disabled"
-	ENABLED = "enabled"
+	ENABLED  = "enabled"
 )
 
 type Product struct {
@@ -82,7 +83,7 @@ func (p *Product) IsValid() (bool, error) {
 }
 
 func (p *Product) Enable() error {
-	if p.Price > 0  {
+	if p.Price > 0 {
 		p.Status = ENABLED
 		return nil
 	}
@@ -90,7 +91,7 @@ func (p *Product) Enable() error {
 }
 
 func (p *Product) Disable() error {
-	if p.Price == 0  {
+	if p.Price == 0 {
 		p.Status = DISABLED
 		return nil
 	}
@@ -111,4 +112,16 @@ func (p *Product) GetStatus() string {
 
 func (p *Product) GetPrice() float64 {
 	return p.Price
+}
+
+func (p *Product) ChangePrice(price float64) error {
+	if p.Price < 0 {
+		return errors.New("price only accept positive numbers")
+	}
+	p.Price = price
+	_, err := p.IsValid()
+	if err != nil {
+		return err
+	}
+	return nil
 }
